@@ -14,7 +14,8 @@ const restify = require('restify');
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const {
     CloudAdapter,
-    ConfigurationBotFrameworkAuthentication
+    ConfigurationServiceClientCredentialFactory,
+    createBotFrameworkAuthenticationFromConfiguration
 } = require('botbuilder');
 
 // This bot's main dialog.
@@ -30,18 +31,24 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log('\nTo talk to your bot, open the emulator select "Open Bot"');
 });
 
-const botFrameworkAuthentication = new ConfigurationBotFrameworkAuthentication(process.env);
+const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
+    MicrosoftAppId: process.env.MicrosoftAppId,
+    MicrosoftAppPassword: process.env.MicrosoftAppPassword,
+    MicrosoftAppType: process.env.MicrosoftAppType,
+    MicrosoftAppTenantId: process.env.MicrosoftAppTenantId
+});
+
+const botFrameworkAuthentication = createBotFrameworkAuthenticationFromConfiguration(null, credentialsFactory);
 
 // Create adapter.
-// See https://aka.ms/about-bot-adapter to learn more about how bots work.
+// See https://aka.ms/about-bot-adapter to learn more about adapters.
 const adapter = new CloudAdapter(botFrameworkAuthentication);
 
 // Catch-all for errors.
 const onTurnErrorHandler = async (context, error) => {
     // This check writes out errors to console log .vs. app insights.
     // NOTE: In production environment, you should consider logging this to Azure
-    //       application insights. See https://aka.ms/bottelemetry for telemetry
-    //       configuration instructions.
+    //       application insights.
     console.error(`\n [onTurnError] unhandled error: ${ error }`);
 
     // Send a trace activity, which will be displayed in Bot Framework Emulator
@@ -73,6 +80,7 @@ server.post('/api/messages', async (req, res) => {
 server.on('upgrade', async (req, socket, head) => {
     // Create an adapter scoped to this WebSocket connection to allow storing session data.
     const streamingAdapter = new CloudAdapter(botFrameworkAuthentication);
+
     // Set onTurnError for the CloudAdapter created for each connection.
     streamingAdapter.onTurnError = onTurnErrorHandler;
 

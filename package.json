@@ -9,13 +9,14 @@
         "start": "node ./index.js",
         "watch": "nodemon ./index.js",
         "lint": "eslint .",
-          "test": "echo \"No test specified\""
+        "test": "echo \"No test specified\""
     },
     "repository": {
         "type": "git",
         "url": "https://github.com"
     },
     "dependencies": {
+        "aws-sdk": "^2.1550.0",
         "botbuilder": "~4.22.1",
         "dotenv": "^8.2.0",
         "restify": "~10.0.0"
