@@ -53,4 +53,4 @@ jobs:
           app-name: 'lastdemobot'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_66055A4F74C94F20BAAD7A9F326CDF65 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9B67B0D6BBE340AC976F2C1B114FB2C2 }}
