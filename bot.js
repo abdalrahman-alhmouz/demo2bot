@@ -8,10 +8,10 @@ const {
   } = require('botbuilder');
   const AWS = require('aws-sdk');
   
-  const AWS_REGION = "us-east-1";
-  const AWS_ACCESS_KEY_ID ="AKIA4MTWK24SF5MF52FS";
-  const AWS_SECRET_ACCESS_KEY="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";  
-  const LAMBDA_FUNCTION_NAME = 'teams-integration-thingLogixCE-dev';
+  const AWS_REGION = process.env.AWS_REGION;
+  const AWS_ACCESS_KEY_ID =process.env.AWS_ACCESS_KEY_ID;
+  const AWS_SECRET_ACCESS_KEY=process.env.AWS_SECRET_ACCESS_KEY;  
+  const LAMBDA_FUNCTION_NAME = process.env.LAMBDA_FUNCTION_NAME;
   
   class EchoBot extends TeamsActivityHandler {
     constructor() {
